@@ -44,13 +44,13 @@ class WeatherController extends Controller
             $location .= ', ' . $data['sys']['country'];
 
             // Armazena a consulta no banco de dados
-            // WeatherQuery::create([
-            //     'city' => $city,
-            //     'temperature' => $data['main']['temp'],
-            //     'description' => $data['weather'][0]['description'],
-            //     'humidity' => $data['main']['humidity'],
-            //     'wind_speed' => $data['wind']['speed'],
-            // ]);
+            WeatherQuery::create([
+                'city' => $city,
+                'temperature' => $data['main']['temp'],
+                'description' => $data['weather'][0]['description'],
+                'humidity' => $data['main']['humidity'],
+                'wind_speed' => $data['wind']['speed'],
+            ]);
 
             // Retorna os dados de clima em formato JSON, incluindo cidade, estado e país juntos
             return response()->json([
