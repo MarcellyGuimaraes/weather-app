@@ -26,9 +26,15 @@ class AuthController extends Controller
         $token = $user->createToken($user->name)->plainTextToken;
 
         // Armazena o token no banco de dados, se necessário, ou retorna o token diretamente
-        return [
-            'token' => $token
-        ];
+        return response()->json([
+            'token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'message' => 'Usuário registrado com sucesso.'
+        ]);
     }
 
     public function login(Request $request)
@@ -42,16 +48,21 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response()->json([
-                'message' => 'The provided credentials are incorrect.'
+                'message' => 'As credenciais estão incorretas. Por favor, verifique e tente novamente.'
             ], 401);
         }
 
         // Verifica se já existe um token para o usuário
         $token = $user->createToken($user->name)->plainTextToken;
 
-        return [
-            'token' => $token
-        ];
+        return response()->json([
+            'token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        ]);
     }
 
     public function logout(Request $request)
@@ -59,7 +70,7 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return [
-            'message' => 'You are logged out.' 
+            'message' => 'Você foi desconectado.' 
         ];
     }
 }

@@ -1,7 +1,7 @@
 ## WEATHER APP API
 
 ### Backend
-##### Como Rodar o MySQL com Docker
+##### Como Rodar o projeto com Docker
 Certifique-se de que o arquivo ```backend/docker/docker-compose.yml``` já esteja no projeto.
 Caso não esteja, deve ser criado com esses dados:
 ```
@@ -50,6 +50,101 @@ Rode o projeto localmente com o comando:
 composer run dev
 ```
 
+##### Rotas da API
+
+###### 1. Rota de Login
+
+**Endpoint:** `POST /api/login`
+
+**Descrição:** Realiza o login do usuário.
+
+**Exemplo de chamada:**
+```
+curl --location 'http://localhost:8000/api/login' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data-raw '{
+    "email": "weather@app.com",
+    "password": "12345678"
+}'
+```
+
+**Exemplo de retorno:**
+```json
+{
+    "token": "[TOKEN]",
+    "user": {
+        "id": 1,
+        "name": "Weather App",
+        "email": "weather@app.com"
+    }
+}
+```
+
+---
+
+###### 2. Rota de Registro
+
+**Endpoint:** `POST /api/register`
+
+**Descrição:** Registra um novo usuário.
+
+**Exemplo de chamada:**
+```
+curl --location 'http://localhost:8000/api/register' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data-raw '{
+    "name": "Weather App",
+    "email": "weather@app.com", 
+    "password": "12345678",
+    "password_confirmation": "12345678"
+}'
+```
+
+**Exemplo de retorno:**
+```json
+{
+    "token": "[TOKEN]",
+    "user": {
+        "id": 1,
+        "name": "Weather App",
+        "email": "weather@app.com"
+    }
+}
+```
+
+---
+
+###### 3. Rota de Consulta de Clima
+
+**Endpoint:** `POST /api/weather`
+
+**Descrição:** Obtém informações sobre o clima para uma cidade específica. É necessário um token de autenticação.
+
+**Exemplo de chamada:**
+```
+curl --location 'http://localhost:8000/api/weather' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'Authorization: Bearer [TOKEN]' \
+--data '{"city": "Feira de Santana"}'
+```
+
+**Exemplo de retorno:**
+```json
+{
+    "city": "Feira de Santana",
+    "temperature": "28°C",
+    "description": "Céu limpo",
+    "humidity": "60%",
+    "wind_speed": "10 km/h"
+}
+```
+
+###### Observações
+- Certifique-se de substituir o token de autenticação no exemplo da rota de consulta de clima pelo token válido que você obteve após o login.
+- Os dados enviados nas requisições devem estar no formato JSON, conforme mostrado nos exemplos.
 ---
 
 
