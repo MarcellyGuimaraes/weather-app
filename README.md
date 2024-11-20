@@ -29,21 +29,25 @@ Suba o container executando no terminal, a partir da raiz do projeto:
 cd backend/docker
 docker-compose up -d
 ```
-O MySQL estará disponível em ```127.0.0.1``` na porta ```3307```. Configure o arquivo ```.env``` com os seguintes valores:
+O MySQL estará disponível em ```127.0.0.1``` na porta ```3307```. 
+Copie o arquivo .env.example para .env (nele já tem toda a configuração do banco de dados) com o comando:
+```
+  cp .env.example .env
+```
 
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3307
-DB_DATABASE=weather_app
-DB_USERNAME=root2
-DB_PASSWORD=root2
-```
+E substitua ```[CHAVE API OPEN WEATHER]``` pela sua chave da api. 
+Você consegue criar a partir desse link https://home.openweathermap.org/api_keys
 
 Teste a conexão com:
 
 ```
 php artisan migrate
+```
+
+Rode o projeto localmente com o comando:
+
+```
+composer run dev
 ```
 
 ---
