@@ -8,3 +8,6 @@ Route::get('/', function () {
 });
 
 Route::get('/weather-all', [WeatherController::class, 'index']);
+
+Route::post('/weather', [WeatherController::class, 'getWeatherApi']);
+
