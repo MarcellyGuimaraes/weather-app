@@ -49,6 +49,7 @@ class WeatherController extends Controller
                     'description' => $data['weather'][0]['description'],
                     'humidity' => $data['main']['humidity'],
                     'wind_speed' => $data['wind']['speed'],
+                    'user_id' => $request->user()->id,
                 ]);
 
                 // Retorna os dados de clima em formato JSON, incluindo cidade, estado e país juntos
@@ -63,7 +64,7 @@ class WeatherController extends Controller
                 return response()->json(['error' => 'Cidade não encontrada'], 404);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao consultar a API de clima.'], 500);
+            return response()->json(['error' => 'Erro ao consultar a API de clima: ' . $e->getMessage()], 500);
         }
     }
 }
