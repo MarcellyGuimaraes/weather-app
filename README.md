@@ -18,27 +18,27 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
 
 ##### Passos para Instalação
 
-1. **Navegue até o diretório do projeto**:  
+1. **Navegue até o diretório do projeto**:
    [`cd backend`]
 
-2. **Configure o ambiente com Docker**:  
-   - Certifique-se de que o arquivo `docker-compose.yml` está no diretório `backend/docker`. Caso não esteja, siga o modelo apresentado na documentação.  
-   - Suba os containers Docker:  
-     [`cd docker`]  
+2. **Configure o ambiente com Docker**:
+   - Certifique-se de que o arquivo `docker-compose.yml` está no diretório `backend/docker`. Caso não esteja, siga o modelo apresentado na documentação.
+   - Suba os containers Docker:
+     [`cd docker`]
      [`docker-compose up -d`]
 
-3. **Copie o arquivo de configuração**:  
+3. **Copie o arquivo de configuração**:
    [`cp .env.example .env`]
 
    - No arquivo `.env`, substitua `[CHAVE API OPEN WEATHER]` pela sua chave de API obtida no [OpenWeather](https://home.openweathermap.org/api_keys).
 
-4. **Instale as dependências do Laravel**:  
+4. **Instale as dependências do Laravel**:
    [`composer install`]
 
-5. **Teste a conexão com o banco de dados**:  
+5. **Teste a conexão com o banco de dados**:
    [`php artisan migrate`]
 
-6. **Execute o servidor de desenvolvimento**:  
+6. **Execute o servidor de desenvolvimento**:
    [`php artisan serve`]
 
    O servidor estará disponível em [`http://localhost:8000`].
@@ -51,16 +51,16 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
 #### Endpoints
 
 ##### 1. Login
-**Endpoint:** `POST /api/login`  
-**Descrição:** Realiza o login de um usuário existente e retorna um token de autenticação.  
+**Endpoint:** `POST /api/login`
+**Descrição:** Realiza o login de um usuário existente e retorna um token de autenticação.
 
-**Exemplo de Payload:**  
+**Exemplo de Payload:**
 [`{
     "email": "user@example.com",
     "password": "password123"
 }`]
 
-**Exemplo de Retorno:**  
+**Exemplo de Retorno:**
 [`{
     "token": "[TOKEN]",
     "user": {
@@ -73,10 +73,10 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
 ---
 
 ##### 2. Registro
-**Endpoint:** `POST /api/register`  
-**Descrição:** Cria um novo usuário no sistema.  
+**Endpoint:** `POST /api/register`
+**Descrição:** Cria um novo usuário no sistema.
 
-**Exemplo de Payload:**  
+**Exemplo de Payload:**
 [`{
     "name": "New User",
     "email": "newuser@example.com",
@@ -84,7 +84,7 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
     "password_confirmation": "password123"
 }`]
 
-**Exemplo de Retorno:**  
+**Exemplo de Retorno:**
 [`{
     "token": "[TOKEN]",
     "user": {
@@ -97,22 +97,27 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
 ---
 
 ##### 3. Consulta de Clima
-**Endpoint:** `POST /api/weather`  
-**Descrição:** Retorna informações climáticas de uma cidade específica. Requer autenticação via token.  
+**Endpoint:** `POST /api/weather`
+**Descrição:** Retorna informações climáticas de uma cidade específica. Requer autenticação via token.
 
-**Exemplo de Payload:**  
+**Exemplo de Payload:**
 [`{
     "city": "Salvador"
 }`]
 
-**Headers Necessários:**  
+**Headers Necessários:**
 [`Authorization: Bearer [TOKEN]`]
 
-**Exemplo de Retorno:**  
+**Exemplo de Retorno:**
 [`{
     "city": "Salvador",
-    "temperature": "30°C",
-    "description": "Ensolarado",
+    "temperature": "24°C",
+    "weather": {
+      "id": 804,
+      "main": "Clouds",
+      "description": "nublado",
+      "icon": "04n"
+    },
     "humidity": "70%",
     "wind_speed": "12 km/h"
 }`]
@@ -121,7 +126,7 @@ Este projeto é uma API RESTful construída com Laravel para fornecer dados sobr
 
 ##### Observações
 - As requisições devem ser feitas no formato JSON.
-- Use o token obtido no login ou no registro para acessar rotas protegidas.  
+- Use o token obtido no login ou no registro para acessar rotas protegidas.
 - As consultas climáticas são limitadas a cidades que estejam disponíveis na API OpenWeather.
 
 

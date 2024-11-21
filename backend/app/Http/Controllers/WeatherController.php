@@ -25,11 +25,21 @@ class WeatherController extends Controller
         try {
             // Realiza a consulta na API do OpenWeatherMap
             $response = Http::get('https://api.openweathermap.org/data/2.5/weather', [
-                'q' => $city,  // Nome da cidade
-                'appid' => env('OPENWEATHER_API_KEY'),  // Sua chave de API
-                'units' => 'metric',  // Retorna a temperatura em Celsius
-                'lang' => 'pt',  // Tradução para português
+                'q' => $city . ',BR',
+                'appid' => env('OPENWEATHER_API_KEY'),
+                'units' => 'metric',
+                'lang' => 'pt',
             ]);
+
+            // Se não encontrar cidade no Brasil, tenta sem especificar o país
+            if (!$response->successful()) {
+                $response = Http::get('https://api.openweathermap.org/data/2.5/weather', [
+                    'q' => $city,
+                    'appid' => env('OPENWEATHER_API_KEY'),
+                    'units' => 'metric',
+                    'lang' => 'pt',
+                ]);
+            }
 
             // Verifica se a resposta foi bem-sucedida
             if ($response->successful()) {
@@ -56,7 +66,8 @@ class WeatherController extends Controller
                 return response()->json([
                     'location' => $location,  // Cidade, estado e país combinados
                     'temperature' => $data['main']['temp'],
-                    'description' => $data['weather'][0]['description'],
+                    'weather' => $data['weather'][0],
+                    'clouds' => $data['clouds']['all'],
                     'humidity' => $data['main']['humidity'],
                     'wind_speed' => $data['wind']['speed'],
                 ]);
